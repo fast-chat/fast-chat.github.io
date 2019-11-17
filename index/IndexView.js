@@ -21,6 +21,7 @@ IndexView {
                         this.inputField,
                         $button('>>').eclick(e => {
                             this.addMessage(this.inputField.value);
+                            this.inputField.focus()
                         })
                     ]).addClass('inputfield'),
                 ]).addClass('wrapper'),
