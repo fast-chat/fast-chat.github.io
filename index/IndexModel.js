@@ -1,0 +1,5 @@
+IndexModel {
+    constructor () {
+        console.log();
+    }
+}
