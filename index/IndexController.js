@@ -29,7 +29,7 @@ IndexController {
         var data = collection.doc("edik");
 
         this.view.onAddMessage = obj => {
-            console.log('message in collection', obj);
+            // console.log('message in collection', obj);
             collection.add(obj);
         } 
         // === add

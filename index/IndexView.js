@@ -56,6 +56,7 @@ IndexView {
         this.inputField.value = '';
         update.call(this);
     }
+    
     private update() {
         document.body.style.minHeight = 	window.innerHeight + 'px';
         document.body.style.height = 	window.innerHeight + 'px';
