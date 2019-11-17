@@ -2,6 +2,9 @@ IndexView {
     constructor () {
         console.log('..init IndexView()')
         this.messageList = $$({messagelist:''});
+        setInterval(() => {
+            this.messageList.scrollTop += 3;
+        } , 1000/60)
         this.inputField = $input().events({
             onkeyup: evt => {
                 if (evt.key === 'Enter') {
@@ -43,7 +46,8 @@ IndexView {
         document.body.style.minHeight = 	window.innerHeight + 'px';
         document.body.style.height = 	window.innerHeight + 'px';
     
-        this.messageList.scrollTop = this.messageList.scrollHeight;
+        // this.messageList.scrollTop = this.messageList.scrollHeight;
+        
     }
     private setCSS() {
         $.LCSS({
