@@ -27,6 +27,7 @@ IndexView {
             },
         });
 
+        window.onresize = update.bind(this);
         setTimeout(update.bind(this), 300);
     }
     public addMessage(message) {
@@ -38,6 +39,9 @@ IndexView {
         update.call(this);
     }
     private update() {
+        document.body.style.minHeight = 	window.innerHeight + 'px';
+        document.body.style.height = 	window.innerHeight + 'px';
+    
         this.messageList.scrollTop = this.messageList.scrollHeight;
     }
     private setCSS() {
