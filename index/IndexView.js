@@ -1,38 +1,40 @@
+import index.leftpanel<LoginView>;
+
 IndexView {
+    $$.avatar = str => {
+        return $div(str.split('')[0].toUpperCase() || 'A', {'data-title': str})
+            .css({
+                'background-color': '#'+str.hash(6)
+            }).addClass('iconavatar');
+    };
     constructor () {
-        console.log('..init IndexView()')
+        console.log('..init IndexView()');
+
+        this.loginView = new LoginView();
+
         this.messageList = $$({messagelist:''});
         this._interval = null;
         this.inputField = $input().events({
             onkeyup: evt => {
                 if (evt.key === 'Enter') {
-                    // console.log('Enter', this.onAddMessage)
-                    if(this.onAddMessage) {
-                        this.onAddMessage({
-                            message: this.inputField.value
-                        });
-                    } 
-                    // this.addMessage(this.inputField.value);
+                   this.sendMessage();
                 };
             },
         });
         
         this.view({
             container: {
-                leftpanel: [],
+                leftpanel: [
+                    this.loginView.view
+                ],
                 basepanel: $$([
-                    {h1_header:'header'},
+                    {h1_header:'FAST CHAT'},
                     this.messageList,
                     $$([
                         this.inputField,
                         $button('>>').eclick(e => {
-                            if(this.onAddMessage) {
-                                this.onAddMessage({
-                                    message: this.inputField.value
-                                });
-                            } 
-                            // this.addMessage(this.inputField.value);
-                            this.inputField.focus()
+                            this.sendMessage();
+                            this.inputField.focus();
                         })
                     ]).addClass('inputfield'),
                 ]).addClass('wrapper'),
@@ -47,43 +49,83 @@ IndexView {
         }, false);
         setTimeout(update.bind(this), 300);
     }
+    public sendMessage() {
+        if(this.onAddMessage) {
+            this.onAddMessage({
+                message: this.inputField.value,
+                name: this.loginView.loginField.value || 'Guest'
+            });
+        } 
+    }
     public addMessage(message) {
-        if(message === '') return;
-        
-        this.messageList.add($$({
-            message: message
-        }));
+        if(!message || message === '') return;
+        try {
+            message = JSON.parse(message);
+            if (message.message === '') return;
+        } catch (e) {
+
+        } 
+        console.log(message)
+        this.messageList.add($$([
+            {avatar: message.name || 'Guest'},
+            {message: message.message} 
+        ]).addClass('messagecontainer'));
         this.inputField.value = '';
         update.call(this);
     }
     
     private update() {
-        document.body.style.minHeight = 	window.innerHeight + 'px';
-        document.body.style.height = 	window.innerHeight + 'px';
+        document.body.style.minHeight = window.innerHeight + 'px';
+        document.body.style.height = window.innerHeight + 'px';
         if(this._interval) {
             clearInterval(this._interval);
         };
         this._interval = setInterval(() => {
             var t = this.messageList.scrollTop;
             this.messageList.scrollTop += 4;
-            // console.log('anim')
+
             if(t === this.messageList.scrollTop) {
                 clearInterval(this._interval);
             };
         } , 1000/60)
-        // this.messageList.scrollTop = this.messageList.scrollHeight;
-        
     }
     private setCSS() {
         $.LCSS({
+            _iconavatar: {
+                backgroundColor: '#adc4e1',
+                fontSize: '24pt',
+                padding: '0',
+                width: '50px',
+                height: '50px',
+                textAlign: 'center',
+                borderTopRightRadius: '1rem',
+                borderBottomLeftRadius: '1rem',
+                border: '5px solid rgba(0,0,0,0.3)',
+                display: 'inline-block',
+                Before:{
+                    content: 'attr(data-title)',
+                    position: 'absolute',
+                    fontSize: '9pt',
+                    backgroundColor: '#fff',
+                    padding: '2px 4px',
+                    marginLeft: '42px',
+                    marginTop: '0px',
+                    color: '#999',
+                } 
+            },
+            _messagecontainer: {
+                padding: '0.5rem',
+                position: 'relative',
+            },
             _message: {
                 animationDuration: '0.3s',
                 animationName: 'show',
                 padding: '0.5rem',
-                margin: '0.5rem',
                 borderRadius: '3px',
                 boxShadow: '1px 1px 5px -4px #000',
                 backgroundColor: '#fff',
+                display: 'inline-block',
+                margin: '0 0 0 -0.5rem',
             },
             _container: {
                 padding: 0,
@@ -92,10 +134,12 @@ IndexView {
                 backgroundColor: '#eee',
                 display: 'flex',
                 justifyContent: 'normal',
-                flexDirection: 'column',
+                flexDirection: 'row',
                 alignItems: 'inherit',
                 _leftpanel: {
-                    display: 'none'
+                    backgroundColor: '#222',
+                    display: 'block',
+                    minWidth: '250px',
                 },
                 _basepanel: {
                     padding: 0,
