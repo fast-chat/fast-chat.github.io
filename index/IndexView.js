@@ -2,14 +2,17 @@ IndexView {
     constructor () {
         console.log('..init IndexView()')
         this.messageList = $$({messagelist:''});
-        setInterval(() => {
-            this.messageList.scrollTop += 3;
-        } , 1000/60)
+        this._interval = null;
         this.inputField = $input().events({
             onkeyup: evt => {
                 if (evt.key === 'Enter') {
-                    console.log('Enter')
-                    this.addMessage(this.inputField.text());
+                    // console.log('Enter', this.onAddMessage)
+                    if(this.onAddMessage) {
+                        this.onAddMessage({
+                            message: this.inputField.value
+                        });
+                    } 
+                    // this.addMessage(this.inputField.value);
                 };
             },
         });
@@ -18,12 +21,17 @@ IndexView {
             container: {
                 leftpanel: [],
                 basepanel: $$([
-                    {h1_:'header'},
+                    {h1_header:'header'},
                     this.messageList,
                     $$([
                         this.inputField,
                         $button('>>').eclick(e => {
-                            this.addMessage(this.inputField.value);
+                            if(this.onAddMessage) {
+                                this.onAddMessage({
+                                    message: this.inputField.value
+                                });
+                            } 
+                            // this.addMessage(this.inputField.value);
                             this.inputField.focus()
                         })
                     ]).addClass('inputfield'),
@@ -32,26 +40,44 @@ IndexView {
         });
 
         window.onresize = update.bind(this);
+        document.body.addEventListener("touchstart", () => {
+            if(this._interval) {
+                clearInterval(this._interval);
+            } 
+        }, false);
         setTimeout(update.bind(this), 300);
     }
     public addMessage(message) {
         if(message === '') return;
+        
         this.messageList.add($$({
             message: message
-        }))
+        }));
         this.inputField.value = '';
         update.call(this);
     }
     private update() {
         document.body.style.minHeight = 	window.innerHeight + 'px';
         document.body.style.height = 	window.innerHeight + 'px';
-    
+        if(this._interval) {
+            clearInterval(this._interval);
+        };
+        this._interval = setInterval(() => {
+            var t = this.messageList.scrollTop;
+            this.messageList.scrollTop += 4;
+            // console.log('anim')
+            if(t === this.messageList.scrollTop) {
+                clearInterval(this._interval);
+            };
+        } , 1000/60)
         // this.messageList.scrollTop = this.messageList.scrollHeight;
         
     }
     private setCSS() {
         $.LCSS({
             _message: {
+                animationDuration: '0.3s',
+                animationName: 'show',
                 padding: '0.5rem',
                 margin: '0.5rem',
                 borderRadius: '3px',
@@ -77,10 +103,7 @@ IndexView {
                     display: 'flex',
                     flexDirection: 'column',
                     flex: 1,
-                    _header: {
-                        height: '3rem',
-                        backgroundColor: '#99f'
-                    },
+                    
                     _wrapper: {
                         display: 'flex',
                         flexDirection: 'column',
@@ -88,15 +111,14 @@ IndexView {
                         maxHeight: '100%',
                         margin: 0,
                         padding: 0,
+                        _header: {
+                            height: '3rem',
+                            backgroundColor: '#99f',
+                            margin: '0rem',
+                            textAlign: 'center',
+                        },
                         _messagelist:{
                             display: 'block',
-                            // display: 'flex',
-                            // flexDirection: 'column',
-                            // justifyContent: 'flex-end',
-
-                            // height: 'calc(100vh - 54px - 3rem)',
-                            // height: '100%',
-                            
                             flex: '1 1 auto',
                             'overflow-y': 'auto',
                             minHeight: '0px',

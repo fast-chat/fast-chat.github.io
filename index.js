@@ -5,5 +5,5 @@ Main {
 	
 	this.controller = new IndexController();
 	
-	// IndexController.initFireBase();
+	this.controller.initFireBase();
 }
