@@ -4,7 +4,7 @@ IndexController {
     constructor() {
         this.view = new IndexView();
         console.log(this.view);
-        Array.from({length: 50}, (i, k) => k).map(i => {
+        Array.from({length: 1}, (i, k) => k).map(i => {
             this.view.addMessage(i + 'zklxcbv kzxbcv');
         })
     }

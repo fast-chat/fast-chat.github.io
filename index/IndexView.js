@@ -14,17 +14,16 @@ IndexView {
         this.view({
             container: {
                 leftpanel: [],
-                basepanel: {
-                    header: [],
-                    body: [
-                        this.messageList, $$([
-                            this.inputField,
-                            $button('>>').eclick(e => {
-                                this.addMessage(this.inputField.value);
-                            })
-                        ]).addClass('inputfield'),
-                    ],
-                },
+                basepanel: $$([
+                    {h1_:'header'},
+                    this.messageList,
+                    $$([
+                        this.inputField,
+                        $button('>>').eclick(e => {
+                            this.addMessage(this.inputField.value);
+                        })
+                    ]).addClass('inputfield'),
+                ]).addClass('wrapper'),
             },
         });
 
@@ -51,18 +50,47 @@ IndexView {
                 backgroundColor: '#fff',
             },
             _container: {
-                height: '100vh',
+                padding: 0,
+                margin: 0,
+                height: '100%',
                 backgroundColor: '#eee',
-                _leftpanel: {},
+                display: 'flex',
+                justifyContent: 'normal',
+                flexDirection: 'column',
+                alignItems: 'inherit',
+                _leftpanel: {
+                    display: 'none'
+                },
                 _basepanel: {
+                    padding: 0,
+                    margin: 0,
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 1,
                     _header: {
                         height: '3rem',
                         backgroundColor: '#99f'
                     },
-                    _body: {
+                    _wrapper: {
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: '100%',
+                        maxHeight: '100%',
+                        margin: 0,
+                        padding: 0,
                         _messagelist:{
-                            height: 'calc(100vh - 54px - 3rem)',
-                            'overflow-y': 'scroll',
+                            display: 'block',
+                            // display: 'flex',
+                            // flexDirection: 'column',
+                            // justifyContent: 'flex-end',
+
+                            // height: 'calc(100vh - 54px - 3rem)',
+                            // height: '100%',
+                            
+                            flex: '1 1 auto',
+                            'overflow-y': 'auto',
+                            minHeight: '0px',
                             paddingBottom: '15px',
                             boxSizing: 'border-box',
                         },
@@ -82,6 +110,7 @@ IndexView {
                             },
                         },
                     },
+                
                 },
             },
         })
