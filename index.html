@@ -14,13 +14,19 @@
 	body {
 		margin: 0;
 		padding: 0;
-		/* overflow: hidden; */
 	}
-	/* div {
-		background: rgba(0,0,0,0.3);
-		padding: 0.1rem;
-		margin	: 0.1rem;
-	} */
+	@media (max-width: 680px) {
+		.container {
+			flex-direction: column;
+		}
+		.container .loginpanel {
+			flex-direction: row;
+    		justify-content: space-between;
+		}
+		.container .loginpanel > input {
+			flex: 1;
+		}
+	}
 	* {
 		box-sizing: border-box;
 		font-family: 'Nunito', sans-serif;

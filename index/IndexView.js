@@ -82,7 +82,7 @@ IndexView {
         };
         this._interval = setInterval(() => {
             var t = this.messageList.scrollTop;
-            this.messageList.scrollTop += 4;
+            this.messageList.scrollTop += 40;
 
             if(t === this.messageList.scrollTop) {
                 clearInterval(this._interval);
@@ -189,6 +189,7 @@ IndexView {
                 
                 },
             },
+            '@media (min-height: 680px)': '{.container { flexDirection : column; } }'
         })
     }
     public view(obj) {
