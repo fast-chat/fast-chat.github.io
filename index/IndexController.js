@@ -13,10 +13,19 @@ IndexController {
         // collection.where('name', '==', 'edik').onSnapshot(data => {
         this.model.messages.onSnapshot(data => {
             var _data = data.docChanges().map(d => d.doc.data());
-            
+            _data = _data.sort(( a, b ) => {
+                if ( a.timestamp < b.timestamp ){
+                    return -1;
+                } 
+                if ( a.timestamp > b.timestamp ){
+                    return 1;
+                } 
+                return 0;
+            })
             _data.forEach(i => {
                 this.view.addMessage(JSON.stringify(i));
             })
+            console.log(_data)
         });
 
         console.log('this.model', this.model)
