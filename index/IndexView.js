@@ -4,7 +4,7 @@ IndexView {
     $$.avatar = str => {
         return $div(str.split('')[0].toUpperCase() || 'A', {'data-title': str})
             .css({
-                'background-color': '#'+str.hash(6)
+                'background-color': '#' + str.hash(6)
             }).addClass('iconavatar');
     };
     constructor () {
@@ -53,7 +53,8 @@ IndexView {
         if(this.onAddMessage) {
             this.onAddMessage({
                 message: this.inputField.value,
-                name: this.loginView.loginField.value || 'Guest'
+                name: this.loginView.loginField.value || 'Guest',
+                timestamp: (d = new Date(), d.getTime() - d.getTimezoneOffset())
             });
         } 
     }
@@ -62,10 +63,8 @@ IndexView {
         try {
             message = JSON.parse(message);
             if (message.message === '') return;
-        } catch (e) {
-
-        } 
-        console.log(message)
+        } catch (e) { } 
+        
         this.messageList.add($$([
             {avatar: message.name || 'Guest'},
             {message: message.message} 
