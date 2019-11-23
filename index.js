@@ -16,4 +16,8 @@ Main {
 	.catch(err => {
 		console.log('Error Ocored.');
 	})
+
+	messaging.onMessage(pay => {
+		console.log('onMessage: ', pay);
+	})
 }

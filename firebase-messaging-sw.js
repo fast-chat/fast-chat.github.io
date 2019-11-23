@@ -11,6 +11,7 @@ var config = {
 firebase.initializeApp(config);
 
 const messaging = firebase.messaging();
+console.log('sw::messaging', messaging);
 messaging.setBackgroundMessageHandler(function(payload) {
     const title = 'Hello World';
     const options = {

@@ -16,8 +16,15 @@ ThisNotification {
         alert('Пользователь кликнул на уведомление');  
     }
     requestPermission (permission) {
-        if (permission === "granted") {        
-           var notification = new Notification(title, options);
+        if (permission === "granted") {
+            try {
+
+                var notification = new Notification(title, options);
+            } catch (err) {
+                navigator.serviceWorker.ready.then(function(registration) {
+                    registration.showNotification(title, options);
+                });
+            }
         } else { 
             alert('Вы запретили показывать уведомления');
         };
