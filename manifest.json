@@ -1,8 +1,8 @@
 {
   "name": "Fast Chat",
-  "short_name": "FChat",
-  "theme_color": "#2196f3",
-  "background_color": "#2196f3",
+  "short_name": "F-Chat",
+  "theme_color": "#222222",
+  "background_color": "#a72a56",
   "display": "standalone",
   "orientation": "portrait",
   "Scope": "/",
