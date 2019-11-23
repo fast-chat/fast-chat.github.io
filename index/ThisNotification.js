@@ -6,7 +6,7 @@ ThisNotification {
  
         this.sendNotification('Верните Линуса!', {
             body: 'Тестирование HTML5 Notifications',
-            icon: 'icon.jpg',
+            icon: 'images/icons/icon-512x512.png',
             dir: 'auto'
         });
     } 
