@@ -23,11 +23,17 @@ ThisNotification {
         };
     }
     sendNotification(title, options) {
-        if (Notification.permission === "granted") {
-            var notification = new Notification(title, options);
-            notification.onclick = clickFunc;
-        } else if (Notification.permission !== 'denied') {
-            Notification.requestPermission(requestPermission);
-        };
+        try {
+            if (!window['Notification']) {
+                console.log('OOPS!')
+            } else if (Notification.permission === "granted") {
+                var notification = new Notification(title, options);
+                notification.onclick = clickFunc;
+            } else if (Notification.permission !== 'denied') {
+                Notification.requestPermission(requestPermission);
+            };
+        } catch (err) {
+            alert(err + '');
+        } 
     }
 }
