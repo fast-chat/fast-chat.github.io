@@ -11,7 +11,7 @@ ThisNotification {
         });
     } 
     public sendNotification(title, options) {
-        if (!("Notification" in window)) {
+        if (!window["Notification"]) {
             alert('Ваш браузер не поддерживает HTML Notifications, его необходимо обновить.');
         } else if (Notification.permission === "granted") {
             var notification = new Notification(title, options);
