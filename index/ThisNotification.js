@@ -33,7 +33,13 @@ ThisNotification {
                 Notification.requestPermission(requestPermission);
             };
         } catch (err) {
-            alert(err + '');
+           Notification.requestPermission(function(result) {
+                if (result === 'granted') {
+                    navigator.serviceWorker.ready.then(function(registration) {
+                        registration.showNotification(title, options);
+                    });
+                } 
+           });
         } 
     }
 }
