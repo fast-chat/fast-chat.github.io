@@ -1,7 +1,6 @@
-import index<IndexController,ThisNotification>;
+import index<IndexController>;
 
 Main {
 	$.css('css/style.css');
-	this.notification = new ThisNotification();
 	this.controller = new IndexController();
 }

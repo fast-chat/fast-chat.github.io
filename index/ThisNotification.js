@@ -1,9 +1,10 @@
 ThisNotification {
     constructor () {
         Notification.requestPermission().then(permissionThen);
- 
-        sendNotification('Верните Линуса!', {
-            body: 'Тестирование HTML5 Notifications',
+    }
+    public notify(login, message) {
+        sendNotification(login, {
+            body: message,
             icon: 'images/icons/icon-512x512.png',
             dir: 'auto' 
         });
@@ -22,9 +23,7 @@ ThisNotification {
         };
     }
     sendNotification(title, options) {
-        if (!window["Notification"]) {
-            alert('Ваш браузер не поддерживает HTML Notifications, его необходимо обновить.');
-        } else if (Notification.permission === "granted") {
+        if (Notification.permission === "granted") {
             var notification = new Notification(title, options);
             notification.onclick = clickFunc;
         } else if (Notification.permission !== 'denied') {
