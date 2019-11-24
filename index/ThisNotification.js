@@ -24,7 +24,7 @@ ThisNotification {
                 navigator.serviceWorker.ready.then(function(registration) {
                     registration.showNotification(title, options);
                 });
-            }
+            } 
         } else { 
             alert('Вы запретили показывать уведомления');
         };
