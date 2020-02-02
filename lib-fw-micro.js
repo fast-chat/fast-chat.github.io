@@ -1254,8 +1254,8 @@ function SaveToFile (data, filename, type) {
 }
 
 $.__build = function() {
-
-	var _lib = $.loadjson('/js/lib-fw-micro.js').data;
+	var _urlLibFwMicro = Array.from(_$('script')).filter(i => i.src.indexOf('lib-fw-micro.js') != -1)[0].src;
+	var _lib = $.loadjson(_urlLibFwMicro).data;
 	
 	var s = $.__classes.reduce(function(a,b,c,d){
 		// d.push ('"'+b + '" :' +a.toString())
